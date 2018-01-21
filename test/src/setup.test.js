@@ -1,0 +1,20 @@
+/**
+ * Created by shawn-liu on 18/1/21.
+ */
+const puppeteer = require('../../src/setup');
+
+// describe('puppeteer setup test', () => {
+//     it('should get browser', () => {
+        (async () => {
+            const browser = await puppeteer.getBrowser({
+                dumpio: true,
+                headless: false
+            });
+            const page = await browser.newPage();
+            await page.goto('https://www.baidu.com');
+            await page.screenshot({path: 'example.png'});
+
+            await browser.close();
+        })();
+//     });
+// });

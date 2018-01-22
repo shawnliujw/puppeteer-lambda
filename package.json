@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-lambda",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "run puppeteer in lambda",
   "main": "src/index.bundle.js",
   "dependencies": {

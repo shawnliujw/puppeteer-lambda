@@ -11,7 +11,7 @@ const puppeteer = require('../../src/setup');
                 headless: false
             });
             const page = await browser.newPage();
-            await page.goto('https://www.baidu.com');
+            await page.goto('https://www.google.com');
             await page.screenshot({path: 'example.png'});
 
             await browser.close();

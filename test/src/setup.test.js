@@ -1,7 +1,7 @@
 /**
  * Created by shawn-liu on 18/1/21.
  */
-const puppeteer = require('../../src/setup');
+const puppeteer = require('../../src/index');
 
 // describe('puppeteer setup test', () => {
 //     it('should get browser', () => {

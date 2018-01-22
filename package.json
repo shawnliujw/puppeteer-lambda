@@ -2,7 +2,7 @@
   "name": "puppeteer-lambda",
   "version": "1.0.1",
   "description": "run puppeteer in lambda",
-  "main": "src/setup.js",
+  "main": "src/index.bundle.js",
   "dependencies": {
     "agent-base": "^4.2.0",
     "async-limiter": "^1.0.0",
@@ -54,6 +54,7 @@
     "url": "^0.10.3",
     "util-deprecate": "^1.0.2",
     "uuid": "^3.1.0",
+    "webpack": "^3.10.0",
     "wrappy": "^1.0.2",
     "ws": "^3.3.3",
     "xml2js": "^0.4.17",
@@ -61,7 +62,15 @@
     "yauzl": "^2.4.1"
   },
   "devDependencies": {
-    "mocha": "^5.0.0"
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2016": "^6.24.1",
+    "babel-preset-es2017": "^6.24.1",
+    "mocha": "^5.0.0",
+    "uglifyjs-webpack-plugin": "^0.4.3",
+    "webpack-node-externals": "^1.6.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

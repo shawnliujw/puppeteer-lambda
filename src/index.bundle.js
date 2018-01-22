@@ -122,7 +122,7 @@ exports.getBrowser = function () {
                             break;
                         }
 
-                        if (!(process.env.NODE_ENV === 'lambda')) {
+                        if (!(config.localChromePath || config.remoteChromeS3Bucket)) {
                             _context2.next = 14;
                             break;
                         }

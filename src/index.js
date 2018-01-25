@@ -8,7 +8,7 @@ const config = require('./config');
 let browser = null;
 exports.getBrowser = async options => {
     if (typeof browser === 'undefined' || !await isBrowserAvailable(browser)) {
-        if (config.localChromePath || config.remoteChromeS3Bucket) {
+        if (process.env.CUSTOME_CHROME) {
             await setupChrome();
             browser = await puppeteer.launch(Object.assign({
                 headless: true,

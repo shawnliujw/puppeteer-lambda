@@ -122,7 +122,7 @@ exports.getBrowser = function () {
                             break;
                         }
 
-                        if (!(config.localChromePath || config.remoteChromeS3Bucket)) {
+                        if (!process.env.CUSTOME_CHROME) {
                             _context2.next = 14;
                             break;
                         }

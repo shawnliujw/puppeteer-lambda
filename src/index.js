@@ -2,15 +2,21 @@ const aws = require('aws-sdk');
 const s3 = new aws.S3({apiVersion: '2006-03-01'});
 const fs = require('fs');
 const tar = require('tar');
+const Promise = require('bluebird');
 const puppeteer = require('puppeteer');
 const config = require('./config');
 
-let browser = null;
-exports.getBrowser = async options => {
-    if (typeof browser === 'undefined' || !await isBrowserAvailable(browser)) {
+let globalBrowser = null;
+let getting = false;
+const _getBrowser = async (options) => {
+    if (null !== globalBrowser && await isBrowserAvailable()) {
+        return globalBrowser;
+    }
+    if (null === globalBrowser && !getting) {
+        getting = true;
         if (process.env.CUSTOME_CHROME) {
             await setupChrome();
-            browser = await puppeteer.launch(Object.assign({
+            globalBrowser = await puppeteer.launch(Object.assign({
                 headless: true,
                 executablePath: config.executablePath,
                 args: config.launchOptionForLambda,
@@ -18,21 +24,38 @@ exports.getBrowser = async options => {
                 ignoreHTTPSErrors: true
             }, options));
         } else {
-            browser = await puppeteer.launch(Object.assign({
+            globalBrowser = await puppeteer.launch(Object.assign({
                 dumpio: !!exports.DEBUG,
                 ignoreHTTPSErrors: true
             }, options));
         }
 
-        debugLog(async (b) => `launch done: ${await browser.version()}`);
+        const version = await globalBrowser.version();
+        console.log(`Launch chrome: ${version}`);
+        return globalBrowser;
+        // debugLog(async (b) => `launch done: ${await globalBrowser.version()}`);
+    } else {
+        do {
+            await Promise.delay(50);
+        } while (!globalBrowser);
+        return globalBrowser;
     }
-    return browser;
+}
+
+const _processAllPromises = () => {
+
+}
+
+exports.getBrowser = async options => {
+    await _getBrowser(options);
+    return globalBrowser;
 };
 
-const isBrowserAvailable = async (browser) => {
+const isBrowserAvailable = async () => {
     try {
-        await browser.version();
+        await globalBrowser.version();
     } catch (e) {
+        globalBrowser = null;
         debugLog(e); // not opened etc.
         return false;
     }

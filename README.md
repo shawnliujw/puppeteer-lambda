@@ -2,9 +2,7 @@
 
 Module for using Headless-Chrome by [Puppeteer](https://github.com/GoogleChrome/puppeteer) on AWS Lambda.
 
-
-
-###How to use
+## How to use
 
 `npm install puppeteer-lambda or yarn add puppeteer-lambda`
 

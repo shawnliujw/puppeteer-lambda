@@ -71,67 +71,76 @@ module.exports =
 "use strict";
 
 
-var _promise = __webpack_require__(1);
-
-var _promise2 = _interopRequireDefault(_promise);
-
-var _regenerator = __webpack_require__(2);
+var _regenerator = __webpack_require__(1);
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _assign = __webpack_require__(3);
+var _assign = __webpack_require__(2);
 
 var _assign2 = _interopRequireDefault(_assign);
 
-var _asyncToGenerator2 = __webpack_require__(4);
+var _asyncToGenerator2 = __webpack_require__(3);
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var aws = __webpack_require__(5);
+var aws = __webpack_require__(4);
 var s3 = new aws.S3({ apiVersion: '2006-03-01' });
-var fs = __webpack_require__(6);
-var tar = __webpack_require__(7);
+var fs = __webpack_require__(5);
+var tar = __webpack_require__(6);
+var Promise = __webpack_require__(7);
 var puppeteer = __webpack_require__(8);
 var config = __webpack_require__(9);
 
-var browser = null;
-exports.getBrowser = function () {
-    var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(options) {
-        return _regenerator2.default.wrap(function _callee2$(_context2) {
+var globalBrowser = null;
+var getting = false;
+var _getBrowser = function () {
+    var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(options) {
+        var version;
+        return _regenerator2.default.wrap(function _callee$(_context) {
             while (1) {
-                switch (_context2.prev = _context2.next) {
+                switch (_context.prev = _context.next) {
                     case 0:
-                        _context2.t0 = typeof browser === 'undefined';
+                        _context.t0 = null !== globalBrowser;
 
-                        if (_context2.t0) {
-                            _context2.next = 5;
+                        if (!_context.t0) {
+                            _context.next = 5;
                             break;
                         }
 
-                        _context2.next = 4;
-                        return isBrowserAvailable(browser);
+                        _context.next = 4;
+                        return isBrowserAvailable();
 
                     case 4:
-                        _context2.t0 = !_context2.sent;
+                        _context.t0 = _context.sent;
 
                     case 5:
-                        if (!_context2.t0) {
-                            _context2.next = 18;
+                        if (!_context.t0) {
+                            _context.next = 7;
                             break;
                         }
+
+                        return _context.abrupt('return', globalBrowser);
+
+                    case 7:
+                        if (!(null === globalBrowser && !getting)) {
+                            _context.next = 27;
+                            break;
+                        }
+
+                        getting = true;
 
                         if (!process.env.CUSTOME_CHROME) {
-                            _context2.next = 14;
+                            _context.next = 17;
                             break;
                         }
 
-                        _context2.next = 9;
+                        _context.next = 12;
                         return setupChrome();
 
-                    case 9:
-                        _context2.next = 11;
+                    case 12:
+                        _context.next = 14;
                         return puppeteer.launch((0, _assign2.default)({
                             headless: true,
                             executablePath: config.executablePath,
@@ -140,53 +149,72 @@ exports.getBrowser = function () {
                             ignoreHTTPSErrors: true
                         }, options));
 
-                    case 11:
-                        browser = _context2.sent;
-                        _context2.next = 17;
+                    case 14:
+                        globalBrowser = _context.sent;
+                        _context.next = 20;
                         break;
 
-                    case 14:
-                        _context2.next = 16;
+                    case 17:
+                        _context.next = 19;
                         return puppeteer.launch((0, _assign2.default)({
                             dumpio: !!exports.DEBUG,
                             ignoreHTTPSErrors: true
                         }, options));
 
-                    case 16:
-                        browser = _context2.sent;
-
-                    case 17:
-
-                        debugLog(function () {
-                            var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(b) {
-                                return _regenerator2.default.wrap(function _callee$(_context) {
-                                    while (1) {
-                                        switch (_context.prev = _context.next) {
-                                            case 0:
-                                                _context.next = 2;
-                                                return browser.version();
-
-                                            case 2:
-                                                _context.t0 = _context.sent;
-                                                return _context.abrupt('return', 'launch done: ' + _context.t0);
-
-                                            case 4:
-                                            case 'end':
-                                                return _context.stop();
-                                        }
-                                    }
-                                }, _callee, undefined);
-                            }));
-
-                            return function (_x2) {
-                                return _ref2.apply(this, arguments);
-                            };
-                        }());
-
-                    case 18:
-                        return _context2.abrupt('return', browser);
-
                     case 19:
+                        globalBrowser = _context.sent;
+
+                    case 20:
+                        _context.next = 22;
+                        return globalBrowser.version();
+
+                    case 22:
+                        version = _context.sent;
+
+                        console.log('Launch chrome: ' + version);
+                        return _context.abrupt('return', globalBrowser);
+
+                    case 27:
+                        _context.next = 29;
+                        return Promise.delay(50);
+
+                    case 29:
+                        if (!globalBrowser) {
+                            _context.next = 27;
+                            break;
+                        }
+
+                    case 30:
+                        return _context.abrupt('return', globalBrowser);
+
+                    case 31:
+                    case 'end':
+                        return _context.stop();
+                }
+            }
+        }, _callee, undefined);
+    }));
+
+    return function _getBrowser(_x) {
+        return _ref.apply(this, arguments);
+    };
+}();
+
+var _processAllPromises = function _processAllPromises() {};
+
+exports.getBrowser = function () {
+    var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(options) {
+        return _regenerator2.default.wrap(function _callee2$(_context2) {
+            while (1) {
+                switch (_context2.prev = _context2.next) {
+                    case 0:
+                        _context2.next = 2;
+                        return _getBrowser(options);
+
+                    case 2:
+                        return _context2.abrupt('return', globalBrowser);
+
+                    case 3:
                     case 'end':
                         return _context2.stop();
                 }
@@ -194,36 +222,37 @@ exports.getBrowser = function () {
         }, _callee2, undefined);
     }));
 
-    return function (_x) {
-        return _ref.apply(this, arguments);
+    return function (_x2) {
+        return _ref2.apply(this, arguments);
     };
 }();
 
 var isBrowserAvailable = function () {
-    var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(browser) {
+    var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3() {
         return _regenerator2.default.wrap(function _callee3$(_context3) {
             while (1) {
                 switch (_context3.prev = _context3.next) {
                     case 0:
                         _context3.prev = 0;
                         _context3.next = 3;
-                        return browser.version();
+                        return globalBrowser.version();
 
                     case 3:
-                        _context3.next = 9;
+                        _context3.next = 10;
                         break;
 
                     case 5:
                         _context3.prev = 5;
                         _context3.t0 = _context3['catch'](0);
 
+                        globalBrowser = null;
                         debugLog(_context3.t0); // not opened etc.
                         return _context3.abrupt('return', false);
 
-                    case 9:
+                    case 10:
                         return _context3.abrupt('return', true);
 
-                    case 10:
+                    case 11:
                     case 'end':
                         return _context3.stop();
                 }
@@ -231,7 +260,7 @@ var isBrowserAvailable = function () {
         }, _callee3, undefined, [[0, 5]]);
     }));
 
-    return function isBrowserAvailable(_x3) {
+    return function isBrowserAvailable() {
         return _ref3.apply(this, arguments);
     };
 }();
@@ -290,7 +319,7 @@ var setupChrome = function () {
 }();
 
 var existsLocalChrome = function existsLocalChrome() {
-    return new _promise2.default(function (resolve, reject) {
+    return new Promise(function (resolve, reject) {
         fs.exists(config.localChromePath, function (exists) {
             resolve(exists);
         });
@@ -298,7 +327,7 @@ var existsLocalChrome = function existsLocalChrome() {
 };
 
 var existsExecutableChrome = function existsExecutableChrome() {
-    return new _promise2.default(function (resolve, reject) {
+    return new Promise(function (resolve, reject) {
         fs.exists(config.executablePath, function (exists) {
             resolve(exists);
         });
@@ -306,7 +335,7 @@ var existsExecutableChrome = function existsExecutableChrome() {
 };
 
 var setupLocalChrome = function setupLocalChrome() {
-    return new _promise2.default(function (resolve, reject) {
+    return new Promise(function (resolve, reject) {
         fs.createReadStream(config.localChromePath).on('error', function (err) {
             return reject(err);
         }).pipe(tar.x({
@@ -320,7 +349,7 @@ var setupLocalChrome = function setupLocalChrome() {
 };
 
 var setupS3Chrome = function setupS3Chrome() {
-    return new _promise2.default(function (resolve, reject) {
+    return new Promise(function (resolve, reject) {
         var params = {
             Bucket: config.remoteChromeS3Bucket,
             Key: config.remoteChromeS3Key
@@ -341,7 +370,7 @@ var debugLog = function debugLog(log) {
     if (config.DEBUG) {
         var message = log;
         if (typeof log === 'function') message = log();
-        _promise2.default.resolve(message).then(function (message) {
+        Promise.resolve(message).then(function (message) {
             return console.log(message);
         });
     }
@@ -351,43 +380,43 @@ var debugLog = function debugLog(log) {
 /* 1 */
 /***/ (function(module, exports) {
 
-module.exports = require("babel-runtime/core-js/promise");
+module.exports = require("babel-runtime/regenerator");
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = require("babel-runtime/regenerator");
+module.exports = require("babel-runtime/core-js/object/assign");
 
 /***/ }),
 /* 3 */
 /***/ (function(module, exports) {
 
-module.exports = require("babel-runtime/core-js/object/assign");
+module.exports = require("babel-runtime/helpers/asyncToGenerator");
 
 /***/ }),
 /* 4 */
 /***/ (function(module, exports) {
 
-module.exports = require("babel-runtime/helpers/asyncToGenerator");
+module.exports = require("aws-sdk");
 
 /***/ }),
 /* 5 */
 /***/ (function(module, exports) {
 
-module.exports = require("aws-sdk");
+module.exports = require("fs");
 
 /***/ }),
 /* 6 */
 /***/ (function(module, exports) {
 
-module.exports = require("fs");
+module.exports = require("tar");
 
 /***/ }),
 /* 7 */
 /***/ (function(module, exports) {
 
-module.exports = require("tar");
+module.exports = require("bluebird");
 
 /***/ }),
 /* 8 */

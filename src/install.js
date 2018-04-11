@@ -3,6 +3,6 @@
  */
 const download = require('./download');
 
-if (process.env.CUSTOME_CHROME) {
+if (process.env.CUSTOM_CHROME) {
     download();
 }

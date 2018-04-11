@@ -5,6 +5,7 @@
   "main": "src/index.bundle.js",
   "dependencies": {
     "aws-sdk": "^2.185.0",
+    "babel-runtime": "^6.26.0",
     "bluebird": "^3.5.1",
     "download": "^6.2.5",
     "puppeteer": "^1.2.0",

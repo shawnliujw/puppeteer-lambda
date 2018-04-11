@@ -33,9 +33,9 @@ And this project use `puppeteer` so don't forget to set `PUPPETEER_SKIP_CHROMIUM
 
 ### 1.chrome in package (recommended)
 
-run `CUSTOME_CHROME=true npm install puppeteer-lambda or LOCAL_CHROME=true yarn add puppeteer-lambda` ,then deploy the package, and set the following env variables in lambda.
+run `CUSTOM_CHROME=true npm install puppeteer-lambda or LOCAL_CHROME=true yarn add puppeteer-lambda` ,then deploy the package, and set the following env variables in lambda.
 
-- `CUSTOME_CHROME`(required): tell the progress to use the custom chrome(locale version or download from s3 automatically)
+- `CUSTOM_CHROME`(required): tell the progress to use the custom chrome(locale version or download from s3 automatically)
 
 ### 2.chrome NOT in package
 

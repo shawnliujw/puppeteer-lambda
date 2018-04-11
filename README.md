@@ -40,7 +40,7 @@ run `npm install or yarn` in the project which import `puppeteer-lambda`, defaul
 Due to the large size of Chrome, it may exceed the [Lambda package size limit](http://docs.aws.amazon.com/lambda/latest/dg/limits.html) (50MB) depending on the other module to include. 
 In that case, put Chrome in S3 and download it at container startup so startup time will be longer.
 
-Run `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true npm install`, deploy the package.zip, and set following env valiables on Lambda.
+Run `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true S3_CHROME=true npm install`, deploy the package , and set following env valiables on Lambda.
 
 - `CHROME_BUCKET`(required): S3 bucket where Chrome is put
 - `CHROME_KEY`(optional): S3 key. default: `headless_shell.tar.gz`

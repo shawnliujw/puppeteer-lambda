@@ -16,7 +16,7 @@ var deleteFolderRecursive = function (path) {
 
 (() => {
     // here will remove the folder chrome when found process.env.PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true;
-    if (process.env.PUPPETEER_SKIP_CHROMIUM_DOWNLOAD) {
+    if (process.env.S3_CHROME) {
         deleteFolderRecursive('../chrome');
     }
 })();

@@ -6,6 +6,7 @@
   "dependencies": {
     "aws-sdk": "^2.185.0",
     "bluebird": "^3.5.1",
+    "download": "^6.2.5",
     "puppeteer": "^1.2.0",
     "tar": "^4.3.0"
   },
@@ -23,7 +24,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "node src/handleChrome.js"
+    "install": "node src/install.js"
   },
   "repository": {
     "type": "git",

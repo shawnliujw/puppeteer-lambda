@@ -131,7 +131,7 @@ var _getBrowser = function () {
 
                         getting = true;
 
-                        if (!process.env.CUSTOME_CHROME) {
+                        if (!(process.env.CUSTOME_CHROME || process.env.CHROME_BUCKET && process.env.CHROME_KEY)) {
                             _context.next = 17;
                             break;
                         }
@@ -199,8 +199,6 @@ var _getBrowser = function () {
         return _ref.apply(this, arguments);
     };
 }();
-
-var _processAllPromises = function _processAllPromises() {};
 
 exports.getBrowser = function () {
     var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(options) {

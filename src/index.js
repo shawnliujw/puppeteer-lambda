@@ -14,7 +14,7 @@ const _getBrowser = async (options) => {
     }
     if (null === globalBrowser && !getting) {
         getting = true;
-        if (process.env.CUSTOME_CHROME || (process.env.CHROME_BUCKET && process.env.CHROME_KEY)) {
+        if (process.env.CUSTOM_CHROME || (process.env.CHROME_BUCKET && process.env.CHROME_KEY)) {
             await setupChrome();
             globalBrowser = await puppeteer.launch(Object.assign({
                 headless: true,

@@ -37,6 +37,27 @@ run `CUSTOM_CHROME=true npm install puppeteer-lambda or CUSTOM_CHROME=true yarn 
 
 - `CUSTOM_CHROME`(required): tell the progress to use the custom chrome(locale version or download from s3 automatically)
 
+`PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true CUSTOM_CHROME=true yarn add puppeteer-lambda`  
+then please check the `node_modules/puppeteer-lambda`
+```
+puppeteer-lambda
+│   README.md
+│   ...    
+│
+└───chrome
+│   │   headless_shell.tar.gz
+│   
+└───node_modules
+    │   ...
+│   
+└───src
+    │   ...
+│   
+└───test
+    │   ...
+    
+```
+
 ### 2.chrome NOT in package
 
 Due to the large size of Chrome, it may exceed the [Lambda package size limit](http://docs.aws.amazon.com/lambda/latest/dg/limits.html) (50MB) depending on the other module to include. 

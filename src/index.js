@@ -38,6 +38,7 @@ const _getBrowser = async (options) => {
         do {
             await Promise.delay(50);
         } while (!globalBrowser);
+        getting = false;
         return globalBrowser;
     }
 }

@@ -29,7 +29,7 @@ Lambda's memory needs to be set to at least 384 MB, but the more memory, the bet
 1536MB -> goto(youtube): 2.154s
 ```
 
-And this project use `puppeteer` so don't forget to set `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true` before run `npm install or yarn` when you prepare the package for lambda.
+NOTE: And this project use `puppeteer` so don't forget to set `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true` before run `npm install or yarn` when you prepare the package for lambda.
 
 ### 1.chrome in package (recommended)
 
@@ -37,10 +37,32 @@ run `CUSTOM_CHROME=true npm install puppeteer-lambda or CUSTOM_CHROME=true yarn 
 
 - `CUSTOM_CHROME`(required): tell the progress to use the custom chrome(locale version or download from s3 automatically)
 
+`PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true CUSTOM_CHROME=true yarn add puppeteer-lambda`  
+then please check the `node_modules/puppeteer-lambda`
+```
+puppeteer-lambda
+│   README.md
+│   ...    
+│
+└───chrome
+│   │   headless_shell.tar.gz
+│   
+└───node_modules
+    │   ...
+│   
+└───src
+    │   ...
+│   
+└───test
+    │   ...
+    
+```
+
 ### 2.chrome NOT in package
 
 Due to the large size of Chrome, it may exceed the [Lambda package size limit](http://docs.aws.amazon.com/lambda/latest/dg/limits.html) (50MB) depending on the other module to include. 
-In that case, put [Chrome Binary](https://raw.githubusercontent.com/shawnLiujianwei/puppeteer-lambda-binary/master/chrome/headless_shell.tar.gz) in S3 and download it at container startup so startup time will be longer.
+In that case, put [Chrome Binary](https://raw.githubusercontent.com/shawnLiujianwei/puppeteer-lambda-binary/master/chrome/headless_shell.tar.gz) in S3 and download it at container startup so startup time will be longer.  
+You can also download the specific version of chrome from [Serverless Chrome](https://github.com/adieuadieu/serverless-chrome/releases)
 
 Run `npm install puppeteer-lambda or yarn add puppeteer-lambda`, deploy the package , and set following env valiables on Lambda.
 

@@ -29,7 +29,13 @@ Lambda's memory needs to be set to at least 384 MB, but the more memory, the bet
 1536MB -> goto(youtube): 2.154s
 ```
 
-NOTE: And this project use `puppeteer` so don't forget to set `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true` before run `npm install or yarn` when you prepare the package for lambda.
+You should also set a environment variable in lambda:
+
+```
+CUSTOM_CHROME = true
+```
+
+NOTE: This project uses `puppeteer` so don't forget to set `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true` before run `npm install or yarn` when you prepare the package for lambda.
 
 ### 1.chrome in package (recommended)
 

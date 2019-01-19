@@ -1,16 +1,16 @@
+const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-
 
 module.exports = {
+    mode: 'production',
     target: 'node',
     externals: [nodeExternals()],
     entry: {
-        'src/index': './src/index.js'
+        'index': './src/index.js'
     },
     output: {
-        path: __dirname,
+        path: path.join(__dirname, 'dist'),
         filename: '[name].bundle.js',
         libraryTarget: 'commonjs2'
     },
@@ -33,7 +33,6 @@ module.exports = {
         }]
     },
     plugins: [
-        // new UglifyJSPlugin()
     ]
 }
 

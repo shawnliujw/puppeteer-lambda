@@ -1,7 +1,7 @@
 const aws = require('aws-sdk');
 const s3 = new aws.S3({apiVersion: '2006-03-01'});
 const fs = require('fs');
-const tar = require('tar');
+const unzip = require('unzip');
 const Promise = require('bluebird');
 const puppeteer = require('puppeteer');
 const config = require('./config');
@@ -14,7 +14,7 @@ const _getBrowser = async (options) => {
     }
     if (null === globalBrowser && !getting) {
         getting = true;
-        if (process.env.CUSTOM_CHROME || (process.env.CHROME_BUCKET && process.env.CHROME_KEY)) {
+        if ((process.env.CUSTOM_CHROME && process.env.CUSTOM_CHROME == "true" )|| (process.env.CHROME_BUCKET && process.env.CHROME_KEY)) {
             await setupChrome();
             globalBrowser = await puppeteer.launch(Object.assign({
                 headless: true,
@@ -92,14 +92,14 @@ const setupLocalChrome = () => {
     return new Promise((resolve, reject) => {
         fs.createReadStream(config.localChromePath)
             .on('error', (err) => reject(err))
-            .pipe(tar.x({
-                C: config.setupChromePath,
+            .pipe(unzip.Extract({
+                path: config.setupChromePath,
             }))
             .on('error', (err) => reject(err))
             .on('end', () => resolve());
     });
 };
-
+    
 const setupS3Chrome = () => {
     return new Promise((resolve, reject) => {
         const params = {
@@ -109,8 +109,8 @@ const setupS3Chrome = () => {
         s3.getObject(params)
             .createReadStream()
             .on('error', (err) => reject(err))
-            .pipe(tar.x({
-                C: config.setupChromePath,
+            .pipe(unzip.Extract({
+                path: config.setupChromePath,
             }))
             .on('error', (err) => reject(err))
             .on('end', () => resolve());

@@ -94,9 +94,10 @@ const setupLocalChrome = () => {
             .on('error', (err) => reject(err))
             .pipe(unzip.Extract({
                 path: config.setupChromePath,
-            }))
-            .on('error', (err) => reject(err))
-            .on('end', () => resolve());
+            }).on('close', () => {
+                fs.chmodSync(config.setupChromePath + '/' + config.headlessExecutable, 0o755);
+                resolve()
+            }).on('error', (err) => reject(err)))
     });
 };
     
@@ -111,9 +112,10 @@ const setupS3Chrome = () => {
             .on('error', (err) => reject(err))
             .pipe(unzip.Extract({
                 path: config.setupChromePath,
-            }))
-            .on('error', (err) => reject(err))
-            .on('end', () => resolve());
+            }).on('close', () => {
+                fs.chmodSync(config.setupChromePath + '/' + config.headlessExecutable, 0o755);
+                resolve()
+            }).on('error', (err) => reject(err)))
     });
 };
 

@@ -18,7 +18,7 @@ const remoteChromeS3Key = process.env.CHROME_KEY || headlessFile;
 const setupChromePath = path.join(path.sep, 'tmp');
 const executablePath = path.join(
     setupChromePath,
-    'headless_shell'
+    'headless-chromium'
 );
 
 const DEBUG = process.env.DEBUG;

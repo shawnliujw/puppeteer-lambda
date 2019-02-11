@@ -1,7 +1,12 @@
 .idea/
+dist
 node_modules
 *.png
 *.log
 setup.test.js
+<<<<<<< HEAD
 sample.js
 .vscode
+=======
+chrome/
+>>>>>>> 98d52999bbfc1b91f6e37f2aaffa98fcfbf3d6d5

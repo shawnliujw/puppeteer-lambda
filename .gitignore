@@ -3,3 +3,5 @@ node_modules
 *.png
 *.log
 setup.test.js
+sample.js
+.vscode

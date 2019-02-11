@@ -8,7 +8,7 @@ const config = require('./config');
 
 let globalBrowser = null;
 let getting = false;
-const _getBrowser = async (options) => {
+exports.getBrowser = async (options) => {
     if (null !== globalBrowser && await isBrowserAvailable()) {
         return globalBrowser;
     }
@@ -32,6 +32,13 @@ const _getBrowser = async (options) => {
 
         const version = await globalBrowser.version();
         console.log(`Launch chrome: ${version}`);
+        getting = false;
+        globalBrowser.on('disconnected',() => {
+            globalBrowser = null;
+            console.log('******************************************************************************************************************************  ')
+            console.log('Suggest not to close browser in Lambda ENV, if close it , the Browser object is considered disposed and cannot be used anymore. ')
+            console.log('******************************************************************************************************************************  ')
+        });
         return globalBrowser;
         // debugLog(async (b) => `launch done: ${await globalBrowser.version()}`);
     } else {
@@ -43,17 +50,18 @@ const _getBrowser = async (options) => {
     }
 }
 
-exports.getBrowser = async options => {
-    await _getBrowser(options);
-    return globalBrowser;
-};
 
 const isBrowserAvailable = async () => {
+    console.log('checking')
     try {
-        await globalBrowser.version();
+       //console.time('version')
+       const version = await globalBrowser.version();
+       console.log(`current browser version: ${version}`)
+       //console.timeEnd('version')
     } catch (e) {
         globalBrowser = null;
         debugLog(e); // not opened etc.
+        //console.log('browser is unavilable now, will re-create it.')
         return false;
     }
     return true;

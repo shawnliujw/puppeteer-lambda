@@ -19,7 +19,7 @@ Idea from [Puppeteer Lambda Starter Kit](https://github.com/sambaiz/puppeteer-la
     await browser.close(); 
 })();
 ```
-
+NOTE: `Suggest not to close browser in Lambda ENV, if close it , the Browser object is considered disposed and cannot be used anymore.`
 ## Packaging & Deploy
 
 Lambda's memory needs to be set to at least 384 MB, but the more memory, the better the performance of any operations.

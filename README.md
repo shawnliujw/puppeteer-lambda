@@ -39,12 +39,11 @@ NOTE: This project uses `puppeteer` so don't forget to set `PUPPETEER_SKIP_CHROM
 
 ### 1.chrome in package (recommended)
 
-run `CUSTOM_CHROME=true npm install puppeteer-lambda or CUSTOM_CHROME=true yarn add puppeteer-lambda` ,then deploy the package, and set the following env variables in lambda.
+run `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true CUSTOM_CHROME=true yarn add puppeteer-lambda` ,then deploy the package to lambda and set the following env variables in lambda.
 
 - `CUSTOM_CHROME`(required): tell the progress to use the custom chrome(locale version or download from s3 automatically)
 
-`PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true CUSTOM_CHROME=true yarn add puppeteer-lambda`  
-then please check the `node_modules/puppeteer-lambda`
+ `node_modules/puppeteer-lambda` should like:
 ```
 puppeteer-lambda
 │   README.md
@@ -70,7 +69,7 @@ Due to the large size of Chrome, it may exceed the [Lambda package size limit](h
 In that case, put [Chrome Binary](https://raw.githubusercontent.com/shawnLiujianwei/puppeteer-lambda-binary/master/chrome/headless_shell.tar.gz) in S3 and download it at container startup so startup time will be longer.  
 You can also download the specific version of chrome from [Serverless Chrome](https://github.com/adieuadieu/serverless-chrome/releases)
 
-Run `npm install puppeteer-lambda or yarn add puppeteer-lambda`, deploy the package , and set following env valiables on Lambda.
+Run `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn add puppeteer-lambda`, deploy the package , and set following env valiables on Lambda.
 
 - `CHROME_BUCKET`(required): S3 bucket where Chrome is put
 - `CHROME_KEY`(optional): S3 key. default: `headless_shell.tar.gz`

@@ -3,7 +3,7 @@ const s3 = new aws.S3({apiVersion: '2006-03-01'});
 const fs = require('fs');
 const unzip = require('unzip');
 const Promise = require('bluebird');
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core');
 const config = require('./config');
 
 let globalBrowser = null;

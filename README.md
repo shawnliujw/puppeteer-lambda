@@ -35,7 +35,7 @@ You should also set a environment variable in lambda:
 CUSTOM_CHROME = true
 ```
 
-NOTE: This project uses `puppeteer` so don't forget to set `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true` before run `npm install or yarn` when you prepare the package for lambda.
+NOTE: This project uses `puppeteer` so don't forget to set `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true` before run `npm install or yarn` when you prepare the **package for lambda**.
 
 ### 1.chrome in package (recommended)
 
@@ -74,3 +74,6 @@ Run `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn add puppeteer-lambda`, deploy th
 - `CHROME_BUCKET`(required): S3 bucket where Chrome is put
 - `CHROME_KEY`(optional): S3 key. default: `headless_shell.tar.gz`
 
+## Q&A  
+### Why not use `puppeteer-core`?  
+In development mode ,we still need chromnium for debugging , so better to `puppeteer` which will install chromnium automatically  

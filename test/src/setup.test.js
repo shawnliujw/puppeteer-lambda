@@ -11,7 +11,7 @@ const Promise = require('bluebird');
                 headless: false
             });
             const page = await browser.newPage();
-            await page.goto('https://www.facebook.com');
+            await page.goto('https://www.baidu.com');
             await page.screenshot({path: 'example.png'});
             await Promise.delay(2000)
             await browser.close();

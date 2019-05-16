@@ -8,8 +8,8 @@
     "babel-runtime": "^6.26.0",
     "bluebird": "^3.5.3",
     "download": "^7.1.0",
-    "puppeteer": "^1.11.0",
-    "unzip": "^0.1.11"
+    "puppeteer": "^1.16.0",
+    "unzipper": "^0.9.11"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

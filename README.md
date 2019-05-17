@@ -78,3 +78,9 @@ Run `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true npm install puppeteer-lambda`, deploy
 ## Q&A  
 ### Why not use `puppeteer-core`?  
 In development mode ,we still need chromnium for debugging , so better to `puppeteer` which will install chromnium automatically  
+
+### How do we use `puppeteer-lambda` with TypeScript?
+`puppeteer-lambda` type definitions depends on `@types/puppeteer` definition.
+You must add `@types/puppeteer` in your project.
+
+`npm install @types/puppeteer`

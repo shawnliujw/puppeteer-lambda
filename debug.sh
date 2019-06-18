@@ -1,4 +1,5 @@
-docker build -t shawnliu/puppeteer-lambda  .
+#!/usr/bin/env bash
+docker build -t  shawnliu/puppeteer-lambda  .
 
 docker run --rm  -it \
 -v "$PWD/src":/var/task/src \

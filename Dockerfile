@@ -1,14 +1,16 @@
-FROM    lambci/lambda:build-nodejs10.x
-WORKDIR /var/task
-RUN     mkdir /build
-COPY    package.json /build
-COPY    package-lock.json* /build
-COPY    src/install.js /build
+FROM    lambci/lambda:nodejs8.10
+USER    root
+RUN     mkdir /dist
 ENV     PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV     CUSTOM_CHROME=true
-RUN     cd /build && npm install --production -d && cp -r /build/node_modules /var/task/node_modules
-COPY    src/install.js /build/src/install.js
-COPY    src/download.js /build/src/download.js
-COPY    src/config.js /build/src/config.js
 
-RUN     cd /build && npm run install && cp -r chrome/  /var/task/chrome
+COPY    package.json /dist
+COPY    package-lock.json* /dist
+RUN     cd /dist && npm install --production -d && cp -r /dist/node_modules /var/task/node_modules
+
+COPY    src/install.js /dist/src/install.js
+COPY    src/download.js /dist/src/download.js
+COPY    src/config.js /dist/src/config.js
+RUN     cd /dist/src && ls -l && node ./install.js && cp -r /dist/chrome /var/task/chrome
+
+ENTRYPOINT bash

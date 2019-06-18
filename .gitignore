@@ -4,7 +4,7 @@ node_modules
 *.png
 *.log
 setup.test.js
-<<<<<<< HEAD
 sample.js
 .vscode
 chrome/
+build/

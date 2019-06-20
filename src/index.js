@@ -14,8 +14,9 @@ exports.getBrowser = async (options) => {
     }
     if (null === globalBrowser && !getting) {
         getting = true;
-        if ((process.env.CUSTOM_CHROME && process.env.CUSTOM_CHROME == "true" )|| (process.env.CHROME_BUCKET && process.env.CHROME_KEY)) {
-            await setupChrome();
+        const useLocal = process.env.CUSTOM_CHROME && process.env.CUSTOM_CHROME == "true";
+        if (useLocal || (process.env.CHROME_BUCKET && process.env.CHROME_KEY)) {
+            await setupChrome(useLocal);
             globalBrowser = await puppeteer.launch(Object.assign({
                 headless: true,
                 executablePath: config.executablePath,
@@ -33,7 +34,7 @@ exports.getBrowser = async (options) => {
         const version = await globalBrowser.version();
         console.log(`Launch chrome: ${version}`);
         getting = false;
-        globalBrowser.on('disconnected',() => {
+        globalBrowser.on('disconnected', () => {
             globalBrowser = null;
             console.log('******************************************************************************************************************************  ')
             console.log('Suggest not to close browser in Lambda ENV, if close it , the Browser object is considered disposed and cannot be used anymore. ')
@@ -54,10 +55,10 @@ exports.getBrowser = async (options) => {
 const isBrowserAvailable = async () => {
     console.log('checking')
     try {
-       //console.time('version')
-       const version = await globalBrowser.version();
-       console.log(`current browser version: ${version}`)
-       //console.timeEnd('version')
+        //console.time('version')
+        const version = await globalBrowser.version();
+        console.log(`current browser version: ${version}`)
+        //console.timeEnd('version')
     } catch (e) {
         globalBrowser = null;
         debugLog(e); // not opened etc.
@@ -67,9 +68,9 @@ const isBrowserAvailable = async () => {
     return true;
 };
 
-const setupChrome = async () => {
+const setupChrome = async (useLocal) => {
     if (!await existsExecutableChrome()) {
-        if (await existsLocalChrome()) {
+        if (useLocal && await existsLocalChrome()) {
             debugLog('setup local chrome');
             await setupLocalChrome();
         } else {
@@ -108,7 +109,7 @@ const setupLocalChrome = () => {
             }).on('error', (err) => reject(err)))
     });
 };
-    
+
 const setupS3Chrome = () => {
     return new Promise((resolve, reject) => {
         const params = {

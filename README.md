@@ -83,4 +83,6 @@ In development mode ,we still need chromnium for debugging , so better to `puppe
 `puppeteer-lambda` type definitions depends on `@types/puppeteer` definition.
 You must add `@types/puppeteer` in your project.
 
-`npm install @types/puppeteer`
+`npm install @types/puppeteer` . 
+### AWS Lambda Version . 
+now the prebuilt chromium [v1.0.0-55](https://github.com/adieuadieu/serverless-chrome/releases/download/v1.0.0-55/stable-headless-chromium-amazonlinux-2017-03.zip)  **doesn't support AWS Lambda Nodejs version 10.x** , if please use nodejs8.10 , if u prefer to use node10.x , please follow the [instruction](https://github.com/adieuadieu/serverless-chrome#building-headless-chromechromium) to build your own chromium and modify the configuration [here](https://github.com/shawnliujw/puppeteer-lambda/blob/5b87c7089defdfb3207df6521b48f648810ed3ef/src/config.js#L14)

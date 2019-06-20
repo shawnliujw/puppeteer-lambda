@@ -73,7 +73,14 @@ You can also download the specific version of chrome from [Serverless Chrome](ht
 Run `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true npm install puppeteer-lambda`, deploy the package , and set following env valiables on Lambda.
 
 - `CHROME_BUCKET`(required): S3 bucket where Chrome is put
-- `CHROME_KEY`(optional): S3 key. default: `headless_shell.tar.gz`
+- `CHROME_KEY`(optional): S3 key. default: `headless_shell.tar.gz`  
+
+## How to Test  
+### 1. run test from your localhost  
+run `npm run test`  
+### 2 run in aws lambda simulation environment  
+test nodejs 8.10 `npm run test-node8`  
+test nodejs 10.x  `npm run test-node10` 
 
 ## Q&A  
 ### Why not use `puppeteer-core`?  

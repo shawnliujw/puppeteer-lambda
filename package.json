@@ -27,7 +27,9 @@
   "scripts": {
     "test": "./node_modules//bin/mocha --recursive test/",
     "build": "NODE_ENV=production webpack --config ./webpack.config.js --colors",
-    "install": "node src/install.js"
+    "install": "node src/install.js",
+    "test-node8": "sh scripts/node8.1.sh",
+    "test-node10": "sh scripts/node10.x.sh"
   },
   "repository": {
     "type": "git",

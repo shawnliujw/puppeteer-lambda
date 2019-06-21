@@ -20,6 +20,18 @@ VERSION=${VERSION:-master}
 
 printf "LANG=en_US.utf-8\nLC_ALL=en_US.utf-8" >> /etc/environment
 
+# Install and enable the EPEL RPM package on Amazon Linux 2
+yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+# Install the Remi repository configuration package
+yum install -y http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+
+# Install the yum-utils package (for the yum-config-manager command)
+yum install -y yum-utils
+
+# Command to enable the repository
+yum-config-manager --enable remi
+
 # install dependencies
 yum install epel-release -y
 yum install -y \

@@ -15,8 +15,12 @@
 
 set -e
 
+CHANNEL=${1:-stable}
+VERSION1=$(curl -s https://omahaproxy.appspot.com/all.json | \
+  jq -r ".[] | select(.os == \"linux\") | .versions[] | select(.channel == \"$CHANNEL\") | .current_version" \
+)
 BUILD_BASE=$(pwd)
-VERSION=${VERSION:-master}
+VERSION=${VERSION1:-master}
 
 printf "LANG=en_US.utf-8\nLC_ALL=en_US.utf-8" >> /etc/environment
 

@@ -8,3 +8,5 @@ sample.js
 .vscode
 chrome/
 build/
+dist/
+binary/

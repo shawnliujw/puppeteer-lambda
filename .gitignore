@@ -9,4 +9,4 @@ sample.js
 chrome/
 build/
 dist/
-binary/
+headless_shell

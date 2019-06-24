@@ -15,12 +15,8 @@
 
 set -e
 
-CHANNEL=${1:-stable}
-VERSION1=$(curl -s https://omahaproxy.appspot.com/all.json | \
-  jq -r ".[] | select(.os == \"linux\") | .versions[] | select(.channel == \"$CHANNEL\") | .current_version" \
-)
 BUILD_BASE=$(pwd)
-VERSION=${VERSION1:-master}
+VERSION=${VERSION:-master}
 
 printf "LANG=en_US.utf-8\nLC_ALL=en_US.utf-8" >> /etc/environment
 
@@ -49,7 +45,8 @@ yum install -y \
   libX11-devel libXScrnSaver-devel libXtst-devel \
   libxkbcommon-x11-devel ncurses-compat-libs nspr-devel nss-devel \
   pam-devel pango-devel pciutils-devel pulseaudio-libs-devel \
-  zlib.i686 httpd mod_ssl php php-cli python-psutil wdiff --enablerepo=epel
+  zlib.i686 httpd mod_ssl php php-cli python-psutil wdiff --enablerepo=epel xz
+
 
 mkdir -p build/chromium
 

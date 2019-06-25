@@ -20,62 +20,58 @@ VERSION=${VERSION:-master}
 
 printf "LANG=en_US.utf-8\nLC_ALL=en_US.utf-8" >> /etc/environment
 
-# Install and enable the EPEL RPM package on Amazon Linux 2
-yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+SOURCE_FOLDER = "$BUILD_BASE/build/chromium/src"
+if [ ! -d "$SOURCE_FOLDER" ]; then
+    echo "Will install dependencies and clone code"
 
-# Install the Remi repository configuration package
-yum install -y http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+    # Install and enable the EPEL RPM package on Amazon Linux 2
+    yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 
-# Install the yum-utils package (for the yum-config-manager command)
-yum install -y yum-utils
+    # Install the Remi repository configuration package
+    yum install -y http://rpms.remirepo.net/enterprise/remi-release-7.rpm
 
-# Command to enable the repository
-yum-config-manager --enable remi
+    # Install the yum-utils package (for the yum-config-manager command)
+    yum install -y yum-utils
 
-# install dependencies
-yum install epel-release -y
-yum install -y \
-  git redhat-lsb python bzip2 tar pkgconfig atk-devel \
-  alsa-lib-devel bison binutils brlapi-devel bluez-libs-devel \
-  bzip2-devel cairo-devel cups-devel dbus-devel dbus-glib-devel \
-  expat-devel fontconfig-devel freetype-devel gcc-c++ GConf2-devel \
-  glib2-devel glibc.i686 gperf glib2-devel gtk2-devel gtk3-devel \
-  java-1.*.0-openjdk-devel libatomic libcap-devel libffi-devel \
-  libgcc.i686 libgnome-keyring-devel libjpeg-devel libstdc++.i686 \
-  libX11-devel libXScrnSaver-devel libXtst-devel \
-  libxkbcommon-x11-devel ncurses-compat-libs nspr-devel nss-devel \
-  pam-devel pango-devel pciutils-devel pulseaudio-libs-devel \
-  zlib.i686 httpd mod_ssl php php-cli python-psutil wdiff --enablerepo=epel xz
+    # Command to enable the repository
+    yum-config-manager --enable remi
 
+    # install dependencies
+    yum install epel-release -y
+    yum install -y \
+      git redhat-lsb python bzip2 tar pkgconfig atk-devel \
+      alsa-lib-devel bison binutils brlapi-devel bluez-libs-devel \
+      bzip2-devel cairo-devel cups-devel dbus-devel dbus-glib-devel \
+      expat-devel fontconfig-devel freetype-devel gcc-c++ GConf2-devel \
+      glib2-devel glibc.i686 gperf glib2-devel gtk2-devel gtk3-devel \
+      java-1.*.0-openjdk-devel libatomic libcap-devel libffi-devel \
+      libgcc.i686 libgnome-keyring-devel libjpeg-devel libstdc++.i686 \
+      libX11-devel libXScrnSaver-devel libXtst-devel \
+      libxkbcommon-x11-devel ncurses-compat-libs nspr-devel nss-devel \
+      pam-devel pango-devel pciutils-devel pulseaudio-libs-devel \
+      zlib.i686 httpd mod_ssl php php-cli python-psutil wdiff xz --enablerepo=epel
 
-mkdir -p build/chromium
+    mkdir -p build/chromium
+    cd build
+    # install dept_tools
+    git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+    cd chromium
 
-cd build
+    # fetch chromium source code
+    # ref: https://www.chromium.org/developers/how-tos/get-the-code/working-with-release-branches
+    git clone https://chromium.googlesource.com/chromium/src.git
+    cp "$BUILD_BASE/.gclient" .
+fi
 
-# install dept_tools
-git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
 
 export PATH="/opt/gtk/bin:$PATH:$BUILD_BASE/build/depot_tools"
 
-cd chromium
+# Do a pull because there are usually revisions pushed while we're cloning
+cd "$SOURCE_FOLDER" && git pull && git checkout -b build "$VERSION"
 
-# fetch chromium source code
-# ref: https://www.chromium.org/developers/how-tos/get-the-code/working-with-release-branches
-git clone https://chromium.googlesource.com/chromium/src.git
-
-(
-  cd src
-
-  # Do a pull because there are usually revisions pushed while we're cloning
-  git pull
-
-  # checkout the release tag
-  git checkout -b build "$VERSION"
-)
-
+cd "$BUILD_BASE/build/chromium"
 # Checkout all the submodules at their branch DEPS revisions
 gclient sync --with_branch_heads --jobs 16
-
 cd src
 
 # the following is no longer necessary since. left here for nostalgia or something.
@@ -93,8 +89,13 @@ SANDBOX_IPC_SOURCE_PATH="content/browser/sandbox_ipc_linux.cc"
 sed -e 's/PLOG(WARNING) << "poll";/PLOG(WARNING) << "poll"; failed_polls = 0;/g' -i "$SANDBOX_IPC_SOURCE_PATH"
 
 
-# specify build flags
-mkdir -p out/Headless && \
+OUT_FOLDER = "$SOURCE_FOLDER/out/Headless"
+
+if [ -d "$OUT_FOLDER" ]; then
+  rm -rf $OUT_FOLDER
+  echo "recreate out/Headless folder"
+  # specify build flags
+  mkdir -p out/Headless && \
   echo 'import("//build/args/headless.gn")' > out/Headless/args.gn && \
   echo 'is_debug = false' >> out/Headless/args.gn && \
   echo 'symbol_level = 0' >> out/Headless/args.gn && \
@@ -102,6 +103,9 @@ mkdir -p out/Headless && \
   echo 'remove_webcore_debug_symbols = true' >> out/Headless/args.gn && \
   echo 'enable_nacl = false' >> out/Headless/args.gn && \
   gn gen out/Headless
+fi
+
+
 
 # build chromium headless shell
 ninja -C out/Headless headless_shell

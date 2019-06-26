@@ -93,3 +93,4 @@ You must add `@types/puppeteer` in your project.
 `npm install @types/puppeteer` . 
 ### AWS Lambda Version . 
 now the prebuilt chromium [v1.0.0-55](https://github.com/adieuadieu/serverless-chrome/releases/download/v1.0.0-55/stable-headless-chromium-amazonlinux-2017-03.zip)  **doesn't support AWS Lambda Nodejs version 10.x** , if please use nodejs8.10 , if u prefer to use node10.x , please follow the [instruction](https://github.com/adieuadieu/serverless-chrome#building-headless-chromechromium) to build your own chromium and modify the configuration [here](https://github.com/shawnliujw/puppeteer-lambda/blob/5b87c7089defdfb3207df6521b48f648810ed3ef/src/config.js#L14)
+**NOTE**: also please have a look this [issue](https://github.com/adieuadieu/serverless-chrome/issues/203) , seems lambda is changing their lambda environment, i tried built from amazonlinux 2 which is the base image for nodejs10x , but it still can not fund from lambda:nodejs10.x .

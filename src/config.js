@@ -17,7 +17,7 @@ const remoteChromeS3Bucket = process.env.CHROME_BUCKET;
 const remoteChromeS3Key = process.env.CHROME_KEY || headlessFile;
 
 const setupChromePath = path.join(path.sep, 'tmp');
-const executablePath = path.join(
+const executablePath = process.env.HEADLESS_CHROME_FILE || path.join(
     setupChromePath,
     headlessExecutable
 );

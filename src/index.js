@@ -8,6 +8,7 @@ const config = require('./config');
 
 let globalBrowser = null;
 let getting = false;
+
 exports.getBrowser = async (options) => {
     if (null !== globalBrowser && await isBrowserAvailable()) {
         return globalBrowser;
@@ -89,13 +90,22 @@ const existsLocalChrome = () => {
     });
 };
 
+exports.existsLocalChrome = existsLocalChrome;
+
 const existsExecutableChrome = () => {
     return new Promise((resolve, reject) => {
-        fs.exists(config.executablePath, (exists) => {
-            resolve(exists);
+        fs.access(config.executablePath, fs.constants.F_OK, (err) => {
+            if (err) {
+                console.log(err);
+                resolve(false);
+            } else {
+                resolve(true)
+            }
         });
     });
 };
+
+exports.existsExecutableChrome = existsExecutableChrome;
 
 const setupLocalChrome = () => {
     return new Promise((resolve, reject) => {

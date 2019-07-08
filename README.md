@@ -67,7 +67,7 @@ puppeteer-lambda
 ### 2.chrome NOT in package
 
 Due to the large size of Chrome, it may exceed the [Lambda package size limit](http://docs.aws.amazon.com/lambda/latest/dg/limits.html) (50MB) depending on the other module to include. 
-In that case, put [Chrome Binary](https://raw.githubusercontent.com/shawnLiujianwei/puppeteer-lambda-binary/master/chrome/headless_shell.tar.gz) in S3 and download it at container startup so startup time will be longer.  
+In that case, put [Chrome Binary](https://github.com/adieuadieu/serverless-chrome/releases/download/v1.0.0-55/stable-headless-chromium-amazonlinux-2017-03.zip) in S3 and download it at container startup so startup time will be longer.  
 You can also download the specific version of chrome from [Serverless Chrome](https://github.com/adieuadieu/serverless-chrome/releases)
 
 Run `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true npm install puppeteer-lambda`, deploy the package , and set following env valiables on Lambda.

@@ -23,12 +23,12 @@ exports.getBrowser = async (options) => {
                 headless: true,
                 executablePath: config.executablePath,
                 args: config.launchOptionForLambda,
-                dumpio: !!exports.DEBUG,
+                dumpio: !!config.DEBUG,
                 ignoreHTTPSErrors: true
             }, options));
         } else {
             globalBrowser = await puppeteer.launch(Object.assign({
-                dumpio: !!exports.DEBUG,
+                dumpio: !!config.DEBUG,
                 ignoreHTTPSErrors: true
             }, options));
         }

@@ -5,6 +5,7 @@ const download = require('./download');
 const index = require('./index');
 const fs = require('fs');
 const path = require('path');
+const utils = require('./utils');
 
 (async () => {
     if (process.env.CUSTOM_CHROME && process.env.CUSTOM_CHROME == "true") {
@@ -12,7 +13,7 @@ const path = require('path');
             download();
         } else {
             fs.mkdirSync(path.join(__dirname, '../chrome'));
-            console.log('Local chrome file exist already, will ignore the download');
+            utils.debugLog('Local chrome file exist already, will ignore the download');
         }
 
     }

@@ -5,6 +5,7 @@ const unzip = require('unzipper');
 const Promise = require('bluebird');
 const puppeteer = require('puppeteer');
 const config = require('./config');
+const utils = require('./utils');
 
 let globalBrowser = null;
 let getting = false;
@@ -33,13 +34,11 @@ exports.getBrowser = async (options) => {
         }
 
         const version = await globalBrowser.version();
-        console.log(`Launch chrome: ${version}`);
+        utils.debugLog(`Launch chrome: ${version}`);
         getting = false;
         globalBrowser.on('disconnected', () => {
             globalBrowser = null;
-            console.log('******************************************************************************************************************************  ')
-            console.log('Suggest not to close browser in Lambda ENV, if close it , the Browser object is considered disposed and cannot be used anymore. ')
-            console.log('******************************************************************************************************************************  ')
+            console.warn('*****Suggest not to close browser in Lambda ENV, if close it , the Browser object is considered disposed and cannot be used anymore.****')
         });
         return globalBrowser;
         // debugLog(async (b) => `launch done: ${await globalBrowser.version()}`);
@@ -54,15 +53,14 @@ exports.getBrowser = async (options) => {
 
 
 const isBrowserAvailable = async () => {
-    console.log('checking')
     try {
         //console.time('version')
         const version = await globalBrowser.version();
-        console.log(`current browser version: ${version}`)
+        utils.debugLog(`current browser version: ${version}`)
         //console.timeEnd('version')
     } catch (e) {
         globalBrowser = null;
-        debugLog(e); // not opened etc.
+        utils.debugLog(e); // not opened etc.
         //console.log('browser is unavilable now, will re-create it.')
         return false;
     }
@@ -72,13 +70,13 @@ const isBrowserAvailable = async () => {
 const setupChrome = async (useLocal) => {
     if (!await existsExecutableChrome()) {
         if (useLocal && await existsLocalChrome()) {
-            debugLog('setup local chrome');
+            utils.debugLog('setup local chrome');
             await setupLocalChrome();
         } else {
-            debugLog('setup s3 chrome');
+            utils.debugLog('setup s3 chrome');
             await setupS3Chrome();
         }
-        debugLog('setup done');
+        utils.debugLog('setup done');
     }
 };
 
@@ -96,7 +94,7 @@ const existsExecutableChrome = () => {
     return new Promise((resolve, reject) => {
         fs.access(config.executablePath, fs.constants.F_OK, (err) => {
             if (err) {
-                console.log(err);
+                utils.debugLog(err);
                 resolve(false);
             } else {
                 resolve(true)
@@ -138,12 +136,3 @@ const setupS3Chrome = () => {
     });
 };
 
-const debugLog = (log) => {
-    if (config.DEBUG) {
-        let message = log;
-        if (typeof log === 'function') message = log();
-        Promise.resolve(message).then(
-            (message) => console.log(message)
-        );
-    }
-};

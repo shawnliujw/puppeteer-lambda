@@ -7,4 +7,5 @@ docker build -t  shawnliu/puppeteer-lambda:node8.1  .
 docker run --rm  -it \
 -v "$PWD/src":/var/task/src \
 -v "$PWD/test":/var/task/test \
+-e DEBUG=true \
 shawnliu/puppeteer-lambda:node8.1

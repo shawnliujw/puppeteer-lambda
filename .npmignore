@@ -2,3 +2,4 @@
 chrome/
 .vscode/
 .idea/
+build/

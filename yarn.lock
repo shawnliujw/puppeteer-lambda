@@ -3850,6 +3850,11 @@ serialize-javascript@^1.7.0:
   resolved "https://registry.npm.taobao.org/serialize-javascript/download/serialize-javascript-1.9.1.tgz?cache=0&sync_timestamp=1575539175342&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fserialize-javascript%2Fdownload%2Fserialize-javascript-1.9.1.tgz#cfc200aef77b600c47da9bb8149c943e798c2fdb"
   integrity sha1-z8IArvd7YAxH2pu4FJyUPnmML9s=
 
+serialize-javascript@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.npm.taobao.org/serialize-javascript/download/serialize-javascript-2.1.1.tgz?cache=0&sync_timestamp=1575539175342&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fserialize-javascript%2Fdownload%2Fserialize-javascript-2.1.1.tgz#952907a04a3e3a75af7f73d92d15e233862048b2"
+  integrity sha1-lSkHoEo+OnWvf3PZLRXiM4YgSLI=
+
 set-blocking@^2.0.0, set-blocking@~2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/set-blocking/download/set-blocking-2.0.0.tgz#045f9782d011ae9a6803ddd382b24392b3d890f7"

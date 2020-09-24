@@ -1,0 +1,7 @@
+{
+  "**/*.+(|ts|tsx)": [
+    "prettier --write",
+    "yarn lint",
+    "git add"
+  ]
+}

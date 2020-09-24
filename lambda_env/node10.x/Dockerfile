@@ -9,7 +9,7 @@ COPY    package-lock.json* /dist
 RUN     cd /dist && npm install -d --registry=https://registry.npm.taobao.org/ && cp -r /dist/node_modules /var/task/node_modules
 
 COPY    src/ /dist/src/
-RUN     cd /dist/src && ls -l && node ./install.js && cp -r /dist/chrome /var/task/chrome
+RUN     cd /dist/src && ls -l && node ./install.ts && cp -r /dist/chrome /var/task/chrome
 COPY    package.json /var/task/package.json
 
 ENTRYPOINT bash

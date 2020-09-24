@@ -10,3 +10,4 @@ chrome/
 build/
 dist/
 headless_shell
+typings

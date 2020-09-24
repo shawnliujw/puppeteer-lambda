@@ -75,6 +75,10 @@ Run `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true npm install puppeteer-lambda`, deploy
 - `CHROME_BUCKET`(required): S3 bucket where Chrome is put
 - `CHROME_KEY`(optional): S3 key. default: `stable-headless-chromium-amazonlinux-2017-03.zip`
 
+## How to Develop
+* setup local aws environment  
+use vagrant + docker to simulate the aws env
+
 ## How to Test  
 ### 1. run test from your localhost  
 run `npm run test`  

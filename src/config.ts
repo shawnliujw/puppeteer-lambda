@@ -40,9 +40,9 @@ const launchOptionForLambda = [
   '--single-process'
 ];
 
-const headlessFile = 'stable-headless-chromium-amazonlinux-2017-03.zip';
+const headlessFile = 'chromium.br';
 const headlessExecutable = 'headless-chromium';
-const headlessFilePath = 'https://github.com/adieuadieu/serverless-chrome/releases/download/v1.0.0-55/stable-headless-chromium-amazonlinux-2017-03.zip';
+const headlessFilePath = 'https://raw.githubusercontent.com/shawnliujw/puppeteer-lambda/puppeteer-5.x/binary/chromium.br';
 const localChromePath = join(__dirname, '../chrome/' + headlessFile);
 const remoteChromeS3Bucket = process.env.CHROME_BUCKET;
 const remoteChromeS3Key = process.env.CHROME_KEY || headlessFile;

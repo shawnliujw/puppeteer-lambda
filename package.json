@@ -7,7 +7,7 @@
   "dependencies": {
     "aws-sdk": "^2.391.0",
     "bluebird": "^3.5.3",
-    "download": "^7.1.0",
+    "download": "^8.0.0",
     "lambdafs": "^2.0.0",
     "puppeteer-core": "^5.3.1",
     "serialize-javascript": "^3.1.0",

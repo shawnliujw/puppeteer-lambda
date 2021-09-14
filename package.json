@@ -10,7 +10,7 @@
     "download": "^7.1.0",
     "puppeteer": "^1.17.0",
     "serialize-javascript": "^3.1.0",
-    "set-value": "^3.0.1",
+    "set-value": "^4.0.1",
     "unzipper": "^0.9.11"
   },
   "devDependencies": {
